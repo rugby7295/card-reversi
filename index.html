@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>カード・リバーシ</title>
 <style>
-:root{--bg:#e8ecf4;--panel:#fff;--ink:#1c2436;--mute:#5b6884;--board:#2f6f5a;--line:#245847;--acc:#c98a12;--c0:#7f8db0;--c1:#8b5fe0;--c2:#d84fc0;--c3:#e0a020;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#e8ecf4;--panel:#fff;--ink:#1c2436;--mute:#5b6884;--board:#2f6f5a;--line:#245847;--acc:#c98a12;--c0:#7f8db0;--c1:#8b5fe0;--c2:#d84fc0;--c3:#e0a020;--c4:#ff3b3b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171c2a;--panel:#232b40;--ink:#e8ecf5;--mute:#93a0ba;--acc:#f0b84a}}
 :root[data-theme="dark"]{--bg:#171c2a;--panel:#232b40;--ink:#e8ecf5;--mute:#93a0ba;--acc:#f0b84a}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -26,14 +26,16 @@ h1{font-size:18px;margin:0}
 .st.po{animation:po .3s}.st.fl{animation:fl .45s}
 @keyframes po{0%{transform:scale(0)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
 @keyframes fl{0%{transform:scaleX(.05);filter:brightness(2.5)}60%{transform:scaleX(1.15)}100%{transform:none}}
+@keyframes myth{from{box-shadow:0 0 8px -2px var(--c4)}to{box-shadow:0 0 20px 3px var(--c4)}}
 .hint::after{content:"";width:22%;height:22%;border-radius:50%;background:rgba(255,255,255,.35);position:absolute}
 #fxl{position:absolute;inset:0;pointer-events:none;overflow:visible}
 .pt{position:absolute;width:8px;height:8px;border-radius:50%}
-.bn{position:absolute;left:0;right:0;top:38%;text-align:center;font-size:30px;font-weight:900;color:#fff;text-shadow:0 0 12px var(--k),0 2px 0 #000,0 0 3px #000;letter-spacing:.05em}
+.bn{position:absolute;left:0;right:0;top:38%;text-align:center;font-size:28px;font-weight:900;color:#fff;text-shadow:0 0 12px var(--k),0 2px 0 #000,0 0 3px #000;letter-spacing:.05em}
 #msg{min-height:24px;font-size:14px;margin:4px 0 8px}
 #hand{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .card{background:var(--panel);color:var(--ink);border:2px solid var(--c0);border-radius:10px;padding:8px 10px;text-align:left;font:inherit;cursor:pointer}
 .card.r1{border-color:var(--c1)}.card.r2{border-color:var(--c2)}.card.r3{border-color:var(--c3);box-shadow:0 0 10px -2px var(--c3)}
+.card.r4{border-color:var(--c4);box-shadow:0 0 10px -1px var(--c4);animation:myth 1.4s infinite alternate}
 .card.sel{box-shadow:0 0 0 3px var(--acc);transform:translateY(-3px)}
 .card:disabled{opacity:.45;cursor:default}
 .n{font-weight:700;font-size:15px;display:flex;justify-content:space-between}
@@ -42,55 +44,70 @@ h1{font-size:18px;margin:0}
 .btn{background:var(--acc);color:#1b1b1b;border:0;border-radius:8px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;margin-top:8px}
 .sb{background:none;border:0;font-size:18px;cursor:pointer;color:var(--ink)}
 h2{font-size:15px;margin:6px 0}
-.cell,.card,.btn,.sb{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cell,.card,.btn,.sb,.tab,.crow,.menu-btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .card{min-height:72px}
 @media (hover:hover){.card:not(:disabled):hover{transform:translateY(-2px)}.cell:hover{filter:brightness(1.15)}}
 #lg{text-align:center;padding-top:14vh}
 #lg h1{font-size:26px;margin-bottom:14px}
 #pn,#rc{width:100%;max-width:280px;font:inherit;font-size:18px;padding:12px;border-radius:8px;border:2px solid var(--c0);background:var(--panel);color:var(--ink);text-align:center}
 #lm{font-size:12px;color:var(--mute);margin-top:12px}
-.lo{background:none;border:0;color:var(--mute);font:inherit;font-size:12px;text-decoration:underline;cursor:pointer;padding:8px 0}
-@media (prefers-reduced-motion:reduce){.st.po,.st.fl{animation:none}}
+.lo{background:none;border:0;color:var(--mute);font:inherit;font-size:12px;text-decoration:underline;cursor:pointer;padding:8px 4px}
+@media (prefers-reduced-motion:reduce){.st.po,.st.fl,.card.r4{animation:none}}
+.menu-btn{display:block;width:100%;background:var(--panel);border:2px solid var(--c0);border-radius:10px;padding:12px 14px;margin:8px 0;font:inherit;font-size:15px;font-weight:700;color:var(--ink);text-align:left;cursor:pointer}
+.menu-btn span{display:block;font-size:12px;font-weight:400;color:var(--mute);margin-top:2px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.tab{background:var(--panel);border:2px solid var(--c0);border-radius:20px;padding:6px 12px;font:inherit;font-size:12px;cursor:pointer;color:var(--ink)}
+.tab.on{background:var(--acc);border-color:var(--acc);color:#1b1b1b;font-weight:700}
+.clist{display:flex;flex-direction:column;gap:6px;max-height:48vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.crow{display:flex;justify-content:space-between;align-items:center;gap:6px;background:var(--panel);border:2px solid var(--c0);border-radius:8px;padding:7px 9px;font-size:12px}
+.crow.r1{border-color:var(--c1)}.crow.r2{border-color:var(--c2)}.crow.r3{border-color:var(--c3)}.crow.r4{border-color:var(--c4)}
+.crow b{font-size:14px;min-width:14px;text-align:center}
+.crow .qb{background:var(--bg);border:0;border-radius:6px;width:26px;height:26px;font:inherit;font-weight:700;color:var(--ink);cursor:pointer}
+.crow small{color:var(--mute);display:block;margin-top:2px}
+#dbmsg{min-height:18px;color:var(--acc);font-size:12px}
 </style>
 </head>
 <body>
 <main>
+
 <section id="lg"><h1>カード・リバーシ</h1><h2>プレイヤーネーム</h2><input id="pn" maxlength="12" autocomplete="off" placeholder="なまえ"><br><button class="btn" id="go">はじめる</button><p id="lm">同じ名前で入ると、前回の続きから遊べます。<br>データはこの端末のブラウザに保存されます。</p></section>
-<div id="gm" hidden><div class="top"><h1>カード・リバーシ</h1><div class="stat" id="st"></div><button class="sb" id="mu" aria-label="音の切替">🔊</button></div>
+
+<section id="mm" hidden><h1>カード・リバーシ</h1><p class="stat" id="mmst"></p>
+<button class="menu-btn" id="m_solo">🗡 ソロ(ローグライク)<span>カードを集めながら連戦。負けてもデッキは残ります</span></button>
+<button class="menu-btn" id="m_prac">🎯 ソロ練習(CPU戦)<span>編集したデッキでCPUと1戦</span></button>
+<button class="menu-btn" id="m_onl">🌐 オンライン対戦<span>編集したデッキで友達と対戦</span></button>
+<button class="menu-btn" id="m_deck">🧩 デッキ編集<span id="mmdk"></span></button>
+<button class="lo" id="mmlo">名前を変える</button></section>
+
+<section id="db" hidden><h2>デッキ編集<span id="dbslot"></span></h2>
+<div class="tabs" id="dbslots"></div>
+<p class="stat" id="dbcount"></p>
+<div class="tabs" id="dbtiers"></div>
+<p id="dbmsg"></p>
+<div class="clist" id="dblist"></div>
+<button class="btn" id="dbback">メニューへ戻る</button></section>
+
+<div id="gm" hidden><div class="top"><h1>カード・リバーシ</h1><div class="stat" id="st"></div><button class="sb" id="mn" aria-label="メニュー">☰</button><button class="sb" id="mu" aria-label="音の切替">🔊</button></div>
 <div id="rm" hidden><h2>友達と対戦(ルーム)</h2><input id="rc" maxlength="12" autocomplete="off" placeholder="ルーム名(英数字)"><br><button class="btn" id="rj">入室</button> <button class="btn" id="rn">新しいルームを作る</button><br><button class="lo" id="cp">招待リンクをコピー</button><p id="rs" class="stat"></p></div>
 <div id="bw"><div id="board" role="grid" aria-label="リバーシ盤"></div><div id="fxl"></div></div>
 <div id="msg" aria-live="polite"></div>
 <div id="ui"></div>
-<div class="dk" id="dk"></div><button class="lo" id="ol">友達と対戦</button> <button class="lo" id="lo">名前を変える</button></div>
+<div class="dk" id="dk"></div></div>
+
 </main>
 <script>
 const $=id=>document.getElementById(id);
-const T=`sq|0,1,2,3|1,2,3,3|一石反転/衝撃波/爆裂陣/星砕き|一閃返し/波動/炸裂/流星
-pl|1,2,3,4|1,1,2,2|十字斬/大十字/聖十字/天十字|十字打ち/交差波/光十字/神十字
-rw|0,1,2,3|1,2,2,3|横一閃/双線/三連閃/薙ぎ払い|横斬り/走り火/横雷/疾風怒濤
-cl|0,1,2,3|1,2,2,3|縦一閃/双柱/三柱/天柱|縦斬り/氷柱/縦雷/雷神柱
-xx|0,1,2,3|2,3,3,3|交差斬/大交差/星十字/天地創造|交点/格子斬/紅蓮十字/千手十字
-dg|2,3,5,8|1,2,2,3|斜め斬り/袈裟斬り/対角閃/千刃|一文字/燕返し/十文字/万刃
-ch|3,5,9,64|1,2,2,3|連鎖/連鎖爆破/大連鎖/滅鎖|数珠/連爆/爆連/無間
-rd|2,4,6,10|1,2,2,3|散弾/乱れ撃ち/流星群/大地震|小石/雨/雹/隕石
-st|0,1,2,3|2,3,3,3|強奪/略奪/簒奪/支配|拾得/借用/徴発/王権
-pg|0,1,2,3|1,2,3,3|破砕/粉砕/消滅/虚無|割る/砕く/払う/無
-gd|0,1,2,3|1,1,2,2|守護/結界/聖域/絶対防御|盾/壁/城塞/神盾
-ad|1,2,3,5|1,1,2,2|増援/援軍/大軍/軍団|伏兵/奇襲/騎馬隊/大軍勢
-dr|2,3,4,5|0,1,1,2|閃き/知恵/啓示/全知|勘/直感/予知/千里眼
-en|1,2,3,4|0,0,1,1|充填/励起/覚醒/超越|一息/集中/没入/無我
-mv|1,2,3,4|1,2,2,3|連撃/双撃/三連撃/百烈|追い打ち/畳み掛け/猛攻/乱舞
-lk|2,4,8,64|1,1,2,2|固定/鎖/鉄壁/不落|留め金/錠/城壁/金剛
-inv|3,5,8,64|1,2,2,3|侵食/蝕/腐食/闇の波|染み/黴/毒霧/暗黒
-cn|1,2,3,4|1,2,2,3|隅取り/角の陣/四隅制圧/角の覇者|角打ち/角笛/四隅砲/隅の王
-ce|2,3,4,6|1,2,2,3|中央突き/本陣/中央制圧/天元|真ん中/中盤/中原/大本営
-ed|1,2,3,4|1,2,2,3|縁打ち/外周砲/枠崩し/額縁|縁石/堤/外堀/城壁崩し
-rg|1,2,3,4|1,2,2,3|輪/波紋/円環/大輪|環/波/渦/渦潮
-ck|1,2,3,4|1,1,2,2|市松/斑/格子/千鳥|碁盤/縞/網目/万華鏡
-rdd|1,2,3,4|1,1,2,2|狙撃/連射/掃射/星群|一矢/二矢/矢継/百矢
-px|1,2,3,5|1,2,2,3|焼却/灼熱/劫火/滅却|煙/炎/猛火/煉獄
-fx|0,1,2,3|2,2,3,3|楔/封印/聖痕/永劫|刻印/烙印/紋章/創世`.split('\n');
-const CARDS={},TG=new Set('sq pl rw cl xx dg ch st pg gd ad rg ck fx'.split(' '));
+// ================= カード生成(式ベース・300種/5レア度) =================
+const ARCH=[ // [id, 表示名, 基礎範囲p, 基礎コスト]
+['sq','一石反転',1,1],['pl','十字斬',1,2],['rw','横一閃',0,2],['cl','縦一閃',0,2],['xx','交差斬',1,3],
+['dg','斜め斬り',2,2],['ch','連鎖',3,2],['rd','散弾',2,2],['st','強奪',0,2],['pg','破砕',0,1],
+['gd','守護',0,1],['ad','増援',1,1],['dr','閃き',2,0],['en','充填',1,0],['mv','連撃',1,0],
+['lk','固定',1,1],['inv','侵食',3,2],['cn','隅取り',1,1],['ce','中央突き',2,2],['ed','縁打ち',1,1],
+['rg','輪',1,1],['ck','市松',1,1],['rdd','狙撃',2,2],['px','焼却',1,1],['fx','楔',0,1]];
+const TG=new Set('sq pl rw cl xx dg ch st pg gd ad rg ck fx'.split(' '));
+const RN=['コモン','レア','エピック','レジェンド','ミシック'],RC=['#9fd0ff','#8b5fe0','#ff6ad5','#f0b84a','#ff3b3b'];
+const TIER_PREFIX=['小','中','大','超','極'],ROMAN=['','・II','・III'],VC=[3,3,2,2,2];
+const ARCH_HUE={pg:'#ff5a5a',px:'#ff8a3d',gd:'#9fe08a',fx:'#9fe08a',ad:'#8ad1ff',dr:'#8ad1ff',en:'#ffe08a',mv:'#ffe08a',ch:'#b06bff',inv:'#8a6a4a',st:'#ffd166',rd:'#ff9ecb',rdd:'#ff9ecb'};
 const DS=(k,p)=>{const q=`周囲${2*p+1}×${2*p+1}の`;return({
 sq:p?q+'相手の石を裏返す':'相手の石を1つ裏返す',pl:`十字(腕${p}マス)の相手の石を裏返す`,rw:`選んだ行(±${p})の相手の石を裏返す`,cl:`選んだ列(±${p})の相手の石を裏返す`,
 xx:`選んだ行と列(±${p})の相手の石を裏返す`,dg:`斜め4方向(${p}マスまで)の相手の石を裏返す`,ch:`つながった相手の石を最大${p}個裏返す`,rd:`相手の石をランダムに${p}個裏返す`,
@@ -99,21 +116,38 @@ ad:`空きマスに石を置く。隣にも計${p}個(反転なし)`,dr:`カー�
 inv:`自分に隣接する相手の石を最大${p}個裏返す`,cn:`四隅${p}マス以内の相手の石を裏返す`,ce:`中央${p}×${p}の相手の石を裏返す`,ed:`外周${p}マスの相手の石を裏返す`,
 rg:`距離${p}の輪の相手の石を裏返す`,ck:`市松状(範囲${p})の相手の石を裏返す`,rdd:`相手の石をランダムに${p}個裏返し、1枚引く`,px:`相手の石をランダムに${p}個消す`,
 fx:p?q+'相手の石を裏返して固定':'相手の石を1つ裏返して固定'})[k]};
-T.forEach((l,i)=>{const[k,p,c,a,b]=l.split('|'),P=p.split(',').map(Number),C=c.split(',').map(Number),A=a.split('/'),B=b.split('/');
- for(let t=0;t<4;t++){const u=Math.max(0,t-1),g=+TG.has(k);
-  CARDS['A'+i+'_'+t]={n:A[t],r:t,c:C[t],p:P[t],k,t:g,d:DS(k,P[t])};
-  CARDS['B'+i+'_'+t]={n:B[t],r:t,c:Math.max(0,C[t]-1),p:P[u],k,t:g,d:DS(k,P[u])+'。1枚引く',b:1}}});
-const RN=['コモン','レア','エピック','レジェンド'],RC=['#9fd0ff','#8b5fe0','#ff6ad5','#f0b84a'];
+function genCards(){
+ const CARDS={};
+ for(const[k,bn,bp,bc]of ARCH)for(let t=0;t<5;t++)for(let v=0;v<VC[t];v++){
+  const p=Math.max(0,Math.round(bp*(1+t*0.85+v*0.35))),c=Math.max(0,Math.round(bc+t*1.3+v*0.5)),
+  id=k+'_'+t+'_'+v,name=TIER_PREFIX[t]+bn+(v?ROMAN[v]:'');
+  CARDS[id]={n:name,r:t,c,p,k,t:TG.has(k)?1:0,d:DS(k,p)+(k==='rdd'?'':'')};
+ }
+ return CARDS}
+const CARDS=genCards();
 const DIRS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
-const START=['A0_0','A0_0','A0_0','A11_0','A11_0','A14_0','A1_0','A10_0'];
+const START=['sq_0_0','sq_0_0','sq_0_0','ad_0_0','ad_0_0','mv_0_0','pl_0_0','gd_0_0'];
+const CAP_T=[30,14,8,4,1],MAXCOPY=[3,3,2,2,1],DECK_SIZE=30,DECK_MIN=15;
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const inb=(r,c)=>r>=0&&r<8&&c>=0&&c<8;
-let S={stage:1,deck:[...START],best:0},cells=[],AC,mute=false,NAME='',ONL={on:0},P=[],OPP='';
+let S={},PD=null,DB={slot:0,tier:0},cells=[],AC,mute=false,NAME='',ONL={on:0},P=[],OPP='',LM='';
+// ================= 保存 =================
 const key=n=>'crv:u:'+n;
-const load=n=>{try{return JSON.parse(localStorage.getItem(key(n)))}catch(e){return null}};
-const save=(st,dk)=>{try{localStorage.setItem(key(NAME),JSON.stringify({stage:st,deck:dk,best:S.best||0}))}catch(e){}};
-// --- 音・演出
+const loadRaw=n=>{try{return JSON.parse(localStorage.getItem(key(n)))}catch(e){return null}};
+function persist(){try{localStorage.setItem(key(NAME),JSON.stringify(PD))}catch(e){}}
+function freshPD(){return{stage:1,deck:[...START],best:0,col:[...START],decks:[[],[],[]],active:0}}
+function loadPD(n){
+ const d=loadRaw(n),pd=freshPD();
+ if(d&&typeof d==='object'){
+  pd.stage=Math.max(1,d.stage|0);pd.best=Math.max(0,d.best|0);
+  pd.deck=(Array.isArray(d.deck)?d.deck:[]).filter(k=>CARDS[k]);if(pd.deck.length<5)pd.deck=[...START];
+  pd.col=[...new Set((Array.isArray(d.col)?d.col:[]).filter(k=>CARDS[k]))];if(!pd.col.length)pd.col=[...START];
+  pd.decks=(Array.isArray(d.decks)&&d.decks.length===3?d.decks:[[],[],[]]).map(a=>(Array.isArray(a)?a:[]).filter(k=>pd.col.includes(k)));
+  pd.active=[0,1,2].includes(d.active)?d.active:0;
+ }else{Object.keys(CARDS).forEach(id=>{if(CARDS[id].r===0)pd.col.push(id)});pd.col=[...new Set(pd.col)]}
+ return pd}
+// ================= 音・演出 =================
 function snd(f,d=.08,t='sine'){if(mute)return;try{AC=AC||new AudioContext();const o=AC.createOscillator(),g=AC.createGain();o.type=t;o.frequency.value=f;g.gain.value=.04;g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
 function burst(list,col){
  if(RM)return;const w=$('bw').getBoundingClientRect(),L=$('fxl');
@@ -125,7 +159,7 @@ function banner(t,col){
  if(RM)return;const e=document.createElement('div');e.className='bn';e.style.setProperty('--k',col);e.textContent=t;$('fxl').appendChild(e);
  e.animate([{transform:'scale(.3)',opacity:0},{transform:'scale(1.15)',opacity:1,offset:.25},{transform:'scale(1)',opacity:1,offset:.75},{transform:'scale(1.4)',opacity:0}],{duration:1000}).onfinish=()=>e.remove()}
 function shake(n){if(RM)return;$('bw').animate([{transform:'translate(0,0)'},{transform:`translate(${n}px,${-n}px)`},{transform:`translate(${-n}px,${n}px)`},{transform:`translate(${n}px,0)`},{transform:'none'}],{duration:280})}
-// --- 盤面ロジック
+// ================= 盤面ロジック =================
 function flips(i,p){
  if(S.b[i])return[];const o=3-p,out=[];
  for(const[dr,dc]of DIRS){let r=(i>>3)+dr,c=(i&7)+dc,line=[],ok=true;
@@ -169,16 +203,23 @@ function apply(id,i){
  else if(k==='st'){if(S.b[i]!==2||S.lock.has(i))return 0;f=E(area(k,p,i));f.forEach(x=>S.b[x]=1);S.lock.add(i)}
  else if(k==='fx'){f=E(area(k,p,i));if(!f.length)return 0;f.forEach(x=>{S.b[x]=1;S.lock.add(x)})}
  else{f=E(area(k,p,i));if(!f.length)return 0;f.forEach(x=>S.b[x]=1)}
- if(cd.b)drawCard();
- burst(f,RC[cd.r]);if(cd.r)banner(cd.n,RC[cd.r]);if(cd.r>=2||f.length>=5)shake(cd.r>=3?8:5);
- snd(300+cd.r*120+f.length*15,.18,'triangle');return 1}
-// --- ターン進行
+ const col=ARCH_HUE[k]||RC[cd.r];burst(f,col);if(cd.r)banner(cd.n,RC[cd.r]);
+ if(cd.r>=4)shake(10);else if(cd.r>=2||f.length>=5)shake(cd.r>=3?8:5);
+ snd(300+cd.r*110+f.length*15,.18,'triangle');return 1}
+// ================= ターン進行(共通) =================
 function drawCard(){if(!S.draw.length){S.draw=sh(S.disc);S.disc=[]}if(S.draw.length)S.hand.push(S.draw.pop())}
+const msg=t=>{LM=t;$('msg').textContent=t};
+function startP(){
+ S.ph='p';S.mv=1;S.sel=-1;
+ if(S.mode==='solo'){S.en=3;while(S.hand.length<4&&S.draw.length+S.disc.length>0)drawCard()}
+ else{S.en=Math.min(12,(S.en||0)+2);let n=2;while(n-->0&&S.hand.length<8&&S.draw.length+S.disc.length>0)drawCard()}
+ msg('あなたの番:カードを使ってから石を置く');R()}
 function newStage(){
  S.b=Array(64).fill(0);S.b[27]=S.b[36]=2;S.b[28]=S.b[35]=1;S.lock=new Set();S.pb=[];
  S.draw=sh(S.deck);S.disc=[];S.hand=[];startP()}
-function startP(){S.ph='p';S.en=3;S.mv=1;S.sel=-1;while(S.hand.length<4&&S.draw.length+S.disc.length>0)drawCard();msg('あなたの番:カードを使ってから石を置く');R()}
-const msg=t=>{LM=t;$('msg').textContent=t};
+function newPractice(){
+ S.b=Array(64).fill(0);S.b[27]=S.b[36]=2;S.b[28]=S.b[35]=1;S.lock=new Set();S.pb=[];
+ S.draw=sh(S.deck);S.disc=[];S.hand=[];S.en=0;startP()}
 function clickCard(n){
  const k=S.hand[n],cd=CARDS[k];if(S.ph!=='p')return;
  if(cd.c>S.en){msg('エナジーが足りません');return}
@@ -194,19 +235,32 @@ function clickCell(i){
 function endP(){if(ONL.on)return onlEnd();S.mv=0;S.ph='c';if(check())return;msg('相手の番...');R();setTimeout(cpu,700)}
 function cpu(){
  const m=legal(2);
- if(m.length){const mis=Math.max(0,.5-.1*(S.stage-1));let pick;
+ if(m.length){const mis=Math.max(0,.5-.1*((S.stage||1)-1));let pick;
   if(Math.random()<mis)pick=m[Math.random()*m.length|0];
   else pick=m.map(i=>[i,flips(i,2).length+([0,7,56,63].includes(i)?5:0)]).sort((a,b)=>b[1]-a[1])[0][0];
   const f=flips(pick,2);S.b[pick]=2;f.forEach(j=>S.b[j]=2);burst([pick,...f],'#8b5fe0');snd(180,.12,'square')}
  if(check())return;startP()}
 function check(){if(!S.b.includes(0)||(!legal(1).length&&!legal(2).length)){finish();return true}return false}
+// レア度ごとの出現率(重み)。コモンが最も出やすく、ミシックが最も出にくい。
+// 挑戦が進む(stageが上がる)ほど、高レア度の重みがわずかに増える。
+const DROP_BASE=[46,29,15,7,3]; // r0コモン..r4ミシック(合計100)
+function dropWeights(stage){
+ const g=Math.max(0,stage-1);
+ return[Math.max(18,DROP_BASE[0]-2*g),DROP_BASE[1],DROP_BASE[2]+Math.min(10,g),DROP_BASE[3]+Math.min(6,Math.floor(g/2)),DROP_BASE[4]+Math.min(4,Math.floor(g/3))]}
+function rollRarity(stage){
+ const w=dropWeights(stage);let x=Math.random()*w.reduce((u,v)=>u+v,0),r=0;
+ while(r<4&&x>w[r]){x-=w[r];r++}return r}
 function finish(){
  const a=cnt(1),b=cnt(2);S.ph='e';
+ if(S.mode==='practice'){
+  msg(a>b?`勝利 ${a}-${b}`:a<b?`敗北 ${a}-${b}`:`引き分け ${a}-${b}`);R();
+  banner(a>b?'WIN':a<b?'LOSE':'DRAW',a>b?'#f0b84a':a<b?'#ff5a5a':'#9fd0ff');
+  snd(a>b?659:a<b?110:300,.3,a>b?'triangle':'sawtooth');return}
  if(a>b){S.ph='r';const pool=Object.keys(CARDS),opts=[];
-  while(opts.length<3){const g=S.stage,w=[Math.max(20,58-3*g),30,12+g,3+g];let x=Math.random()*w.reduce((u,v)=>u+v),r=0;while(x>w[r]){x-=w[r];r++}const c=sh(pool.filter(k=>CARDS[k].r===r))[0];if(!opts.includes(c))opts.push(c)}
+  while(opts.length<3){const r=rollRarity(S.stage),c=sh(pool.filter(k=>CARDS[k].r===r))[0];if(c&&!opts.includes(c))opts.push(c)}
   S.opts=opts;msg(`勝利 ${a}-${b}。報酬カードを1枚選ぼう`);R();banner('STAGE CLEAR','#f0b84a');[523,659,784,1047].forEach((f,i)=>setTimeout(()=>snd(f,.2,'triangle'),i*110))}
- else{S.best=Math.max(S.best||0,S.stage-1);save(S.stage,S.deck);msg(a===b?`引き分け ${a}-${b}。デッキはそのまま再挑戦できます`:`敗北 ${a}-${b}。デッキはそのまま再挑戦できます`);R();banner('DEFEAT','#ff5a5a');snd(110,.5,'sawtooth')}}
-// --- 描画(盤面は最初に1度だけ生成し、差分だけ更新)
+ else{PD.deck=S.deck;PD.best=Math.max(PD.best||0,S.stage-1);persist();msg(a===b?`引き分け ${a}-${b}。デッキはそのまま再挑戦できます`:`敗北 ${a}-${b}。デッキはそのまま再挑戦できます`);R();banner('DEFEAT','#ff5a5a');snd(110,.5,'sawtooth')}}
+// ================= 描画 =================
 function deckText(){const m={};S.deck.forEach(k=>m[k]=(m[k]||0)+1);
  return `デッキ ${S.deck.length}枚:`+Object.keys(m).sort((a,b)=>CARDS[b].r-CARDS[a].r).map(k=>`${CARDS[k].n}×${m[k]}`).join(' / ')}
 const ch=k=>{const c=CARDS[k];return `<span class="n"><span>${c.n}</span><span>⚡${c.c}</span></span><span class="rr">${RN[c.r]}</span><br><span class="d">${c.d}</span>`};
@@ -216,25 +270,32 @@ function R(){
   s.className='st'+(v?v===1?' p':' c':'')+(S.lock.has(i)?' l':'')+(v&&!o?' po':v&&o&&o!==v?' fl':'');
   s.style.display=v?'':'none';el.classList.toggle('hint',lg.has(i))});
  S.pb=[...b];
- $('st').innerHTML=`${NAME} ${ONL.on?'<b>'+ONL.room+'</b>':'第<b>'+S.stage+'</b>戦'} ⚡<b>${myTurn()?S.en:0}</b> 山<b>${vd()}</b> <b>${b.filter(x=>x===1).length}</b>-<b>${b.filter(x=>x===2).length}</b>`;
- $('dk').textContent=deckText()+' / 最高 '+(S.best||0)+'戦クリア';
+ const label=ONL.on?'<b>'+ONL.room+'</b>':S.mode==='practice'?'練習戦':'第<b>'+S.stage+'</b>戦';
+ $('st').innerHTML=`${NAME} ${label} ⚡<b>${myTurn()?S.en:0}</b> 山<b>${vd()}</b> <b>${b.filter(x=>x===1).length}</b>-<b>${b.filter(x=>x===2).length}</b>`;
+ $('dk').textContent=S.mode==='solo'?deckText()+' / 最高 '+(PD.best||0)+'戦クリア':S.mode==='practice'?'ソロ練習中':'';
  const ui=$('ui');
  if(S.ph==='r')ui.innerHTML='<h2>報酬を選ぶ</h2><div id="hand">'+S.opts.map(k=>`<button class="card r${CARDS[k].r}" data-k="${k}">${ch(k)}</button>`).join('')+'</div>';
- else if(S.ph==='e')ui.innerHTML=ONL.on?'<button class="btn" id="lv">ルームを出る</button>':'<button class="btn" id="rt">同じ戦にもう一度挑戦</button><br><button class="lo" id="re">デッキを捨てて最初からやり直す</button>';
- else ui.innerHTML='<div id="hand">'+vh().map((k,n)=>`<button class="card r${CARDS[k].r}${myTurn()&&S.sel===n?' sel':''}" data-n="${n}" ${!myTurn()||CARDS[k].c>S.en?'disabled':''}>${ch(k)}</button>`).join('')+'</div>'
-  +(myTurn()&&!legal(1).length?'<button class="btn" id="pass">置ける場所がない:パス</button>':'')}
+ else if(S.ph==='e'){
+  if(ONL.on)ui.innerHTML='<button class="btn" id="lv">ルームを出る</button>';
+  else if(S.mode==='practice')ui.innerHTML='<button class="btn" id="rt">もう一度対戦</button><br><button class="lo" id="mn2">メニューへ戻る</button>';
+  else ui.innerHTML='<button class="btn" id="rt">同じ戦にもう一度挑戦</button><br><button class="lo" id="re">デッキを捨てて最初からやり直す</button><br><button class="lo" id="mn2">メニューへ戻る</button>'}
+ else{
+  ui.innerHTML='<div id="hand">'+vh().map((k,n)=>`<button class="card r${CARDS[k].r}${myTurn()&&S.sel===n?' sel':''}" data-n="${n}" ${!myTurn()||CARDS[k].c>S.en?'disabled':''}>${ch(k)}</button>`).join('')+'</div>'
+   +(myTurn()&&S.sel<0?'<button class="btn" id="pass">'+(legal(1).length?'手番を終える(パス)':'置ける場所がない:パス')+'</button>':'')}}
 $('board').innerHTML='<button class="cell"><span class="st"></span></button>'.repeat(64);
 cells=[...$('board').children];
 $('board').onclick=e=>{const c=e.target.closest('.cell');if(c)uiAct('s',cells.indexOf(c))};
-$('ui').onclick=e=>{const t=e.target.closest('[data-n],[data-k],#pass,#re,#rt');if(!t)return;
+$('ui').onclick=e=>{const t=e.target.closest('[data-n],[data-k],#pass,#re,#rt,#lv,#mn2');if(!t)return;
  if(t.id==='pass')uiAct('p');
  else if(t.id==='lv')lobby();
- else if(t.id==='rt'){S={stage:S.stage,deck:S.deck,best:S.best};newStage()}
- else if(t.id==='re'){S={stage:1,deck:[...START],best:S.best};newStage()}
- else if(t.dataset.k){S.deck.push(t.dataset.k);S.best=Math.max(S.best||0,S.stage);S.stage++;save(S.stage,S.deck);newStage()}
+ else if(t.id==='mn2')backToMenu();
+ else if(t.id==='rt'){if(S.mode==='practice'){S={mode:'practice',deck:[...S.deck]};newPractice()}else{S={mode:'solo',stage:S.stage,deck:S.deck};newStage()}}
+ else if(t.id==='re'){PD.deck=[...START];PD.stage=1;persist();S={mode:'solo',stage:1,deck:[...START]};newStage()}
+ else if(t.dataset.k){const id=t.dataset.k;S.deck.push(id);if(!PD.col.includes(id))PD.col.push(id);PD.deck=S.deck;PD.best=Math.max(PD.best||0,S.stage);PD.stage=S.stage+1;persist();S.stage=PD.stage;newStage()}
  else uiAct('c',+t.dataset.n)};
 $('mu').onclick=()=>{mute=!mute;$('mu').textContent=mute?'🔇':'🔊'};
-// --- オンライン対戦(ホスト権威:ホストが盤面を計算し、ゲストへ状態を送る)
+$('mn').onclick=backToMenu;
+// ================= オンライン対戦(ホスト権威) =================
 const swp=b=>b.map(v=>v?3-v:0),hostIdle=()=>ONL.on&&ONL.host&&S.who===1;
 const vb=()=>hostIdle()?swp(S.b):S.b,vh=()=>hostIdle()?P[0].hand:S.hand,vd=()=>(hostIdle()?P[0].draw:S.draw).length;
 const myTurn=()=>ONL.on?(ONL.host?S.who===0&&S.ph==='p':S.ph==='p'):S.ph==='p';
@@ -247,12 +308,11 @@ function uiAct(t,v){
 function doAct(t,v){if(S.ph!=='p')return;v|=0;t==='c'?clickCard(v):t==='s'?clickCell(v):t==='p'&&endP();bc()}
 function snap(){const g=S.who===1,o=g?S:P[1];
  return{b:g?S.b:swp(S.b),l:[...S.lock],h:o.hand,dn:o.draw.length,en:g?S.en:0,sel:g?S.sel:-1,ph:S.ph==='e'?'e':g?'p':'c',m:LM,ov:S.over||0}}
-let LM='';
 function bc(){if(!ONL.on||!ONL.host||!ONL.started)return;ONL.rm.emit('s',snap()).catch(()=>{});if(S.who!==0&&S.ph!=='e')$('msg').textContent='相手の番'}
 function swapTurn(){
- P[S.who]={draw:S.draw,disc:S.disc,hand:S.hand};S.b=swp(S.b);S.who^=1;
- const q=P[S.who];S.draw=q.draw;S.disc=q.disc;S.hand=q.hand;S.en=3;S.mv=1;S.sel=-1;
- while(S.hand.length<4&&S.draw.length+S.disc.length>0)drawCard();
+ P[S.who]={draw:S.draw,disc:S.disc,hand:S.hand,en:S.en};S.b=swp(S.b);S.who^=1;
+ const q=P[S.who];S.draw=q.draw;S.disc=q.disc;S.hand=q.hand;S.en=Math.min(12,(q.en||0)+2);S.mv=1;S.sel=-1;
+ let n=2;while(n-->0&&S.hand.length<8&&S.draw.length+S.disc.length>0)drawCard();
  msg('あなたの番:カードを使ってから石を置く');R();bc()}
 function onlEnd(){S.mv=0;if(!S.b.includes(0)||(!legal(1).length&&!legal(2).length))return onlFin();swapTurn()}
 function onlFin(){
@@ -271,16 +331,16 @@ function peers(){
  ONL.hp=ps[0].peer;ONL.gp=ps[1].peer;ONL.host=me===0;rs(ONL.host?'相手が入室しました。開始します...':'相手が入室しました。開始を待っています...')}
 function startHost(h){
  const dk=(Array.isArray(h.d)?h.d:[]).filter(k=>CARDS[k]),gd=dk.length>=5?dk:[...START],mine=S.deck.filter(k=>CARDS[k]);
- OPP=String(h.n||'相手').slice(0,12);ONL.started=1;
- P=[{draw:sh(mine),disc:[],hand:[]},{draw:sh(gd),disc:[],hand:[]}];
+ OPP=String(h.n||'相手').slice(0,12);ONL.started=1;S.mode='online';
+ P=[{draw:sh(mine),disc:[],hand:[],en:0},{draw:sh(gd),disc:[],hand:[],en:0}];
  S.b=Array(64).fill(0);S.b[27]=S.b[36]=2;S.b[28]=S.b[35]=1;S.lock=new Set();S.pb=[];S.who=0;S.over=0;
- const q=P[0];S.draw=q.draw;S.disc=q.disc;S.hand=q.hand;S.en=3;S.mv=1;S.sel=-1;S.ph='p';
- while(S.hand.length<4&&S.draw.length+S.disc.length>0)drawCard();
+ const q=P[0];S.draw=q.draw;S.disc=q.disc;S.hand=q.hand;S.en=2;S.mv=1;S.sel=-1;S.ph='p';
+ let n=2;while(n-->0&&S.hand.length<8&&S.draw.length>0)drawCard();
  $('rm').hidden=true;msg(`${OPP}と対戦開始!あなたの番`);R();bc()}
 function leaveOnline(){
  if(ONL.on){(ONL.unsub||[]).forEach(f=>f());if(ONL.rm)ONL.rm.leave().catch(()=>{})}
  ONL={on:0}}
-function lobby(){leaveOnline();$('pn').value=NAME;enter()}
+function lobby(){leaveOnline();$('gm').hidden=true;showMenu()}
 function wsRoom(code){return new Promise((res,rej)=>{
  const ws=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws?room='+code);
  let ls={},ps=[],pcb=[],me=null;const ok=()=>Promise.resolve();
@@ -310,22 +370,61 @@ async function joinRoom(){
   if(!ONL.started){peers();if(ONL.host===false)rm.emit('h',{d:S.deck.slice(0,60),n:NAME}).catch(()=>{})}
   else if(ONL.host)bc()},1500);
  U(()=>clearInterval(tm));peers()}
-$('ol').onclick=()=>{$('rm').hidden=!$('rm').hidden};$('rj').onclick=joinRoom;
+$('rj').onclick=joinRoom;
 $('rn').onclick=()=>{$('rc').value=Math.random().toString(36).slice(2,7);joinRoom()};
 $('cp').onclick=()=>{const c=ONL.room||$('rc').value.trim().toLowerCase();if(!c)return rs('先にルームに入ってください');
  const u=location.origin+location.pathname+'?r='+c;(navigator.share?navigator.share({url:u,text:'カード・リバーシで対戦しよう'}):navigator.clipboard.writeText(u)).then(()=>rs('リンクを共有/コピーしました: '+u),()=>rs('このリンクを送ってください: '+u))};
 let AUTO=new URLSearchParams(location.search).get('r');
+// ================= メニュー / デッキ編集 =================
+function activeDeckOK(){return PD.decks[PD.active].length>=DECK_MIN}
+function showMenu(){
+ $('mm').hidden=false;
+ $('mmst').textContent=`${NAME} / 最高${PD.best}戦クリア / 所持カード${PD.col.length}種`;
+ $('mmdk').textContent=`編集中:デッキ${PD.active+1}(${PD.decks[PD.active].length}/${DECK_SIZE}枚)`}
+function backToMenu(){leaveOnline();$('gm').hidden=true;$('db').hidden=true;showMenu()}
+function dbmsg(t){$('dbmsg').textContent=t}
+function renderDB(){
+ const deck=PD.decks[DB.slot];
+ $('dbslot').textContent=' - デッキ'+(DB.slot+1);
+ $('dbslots').innerHTML=[0,1,2].map(i=>`<button class="tab ${i===DB.slot?'on':''}" data-slot="${i}">デッキ${i+1}(${PD.decks[i].length})</button>`).join('');
+ $('dbcount').textContent=`${deck.length}/${DECK_SIZE}枚${deck.length<DECK_MIN?'(最低'+DECK_MIN+'枚必要)':''}`;
+ $('dbtiers').innerHTML=RN.map((nm,i)=>{const used=deck.filter(id=>CARDS[id].r===i).length;return `<button class="tab ${i===DB.tier?'on':''}" data-tier="${i}">${nm}(${used}/${CAP_T[i]})</button>`}).join('');
+ const list=PD.col.filter(id=>CARDS[id].r===DB.tier).sort((a,b)=>CARDS[a].n<CARDS[b].n?-1:1);
+ $('dblist').innerHTML=list.length?list.map(id=>{const c=CARDS[id],have=deck.filter(x=>x===id).length;
+  return `<div class="crow r${c.r}"><span style="flex:1"><b>${c.n}</b><small>⚡${c.c} ${c.d}</small></span><button class="qb" data-m="${id}">－</button><b>${have}</b><button class="qb" data-p="${id}">＋</button></div>`}).join(''):'<p class="stat">このレア度のカードはまだ持っていません(ソロモードで入手できます)</p>'}
+function dbAdd(id){
+ const c=CARDS[id],deck=PD.decks[DB.slot],have=deck.filter(x=>x===id).length,used=deck.filter(x=>CARDS[x].r===c.r).length;
+ if(deck.length>=DECK_SIZE)return dbmsg('デッキは'+DECK_SIZE+'枚までです');
+ if(have>=MAXCOPY[c.r])return dbmsg(c.n+'は同じカードを'+MAXCOPY[c.r]+'枚までしか入れられません');
+ if(used>=CAP_T[c.r])return dbmsg(RN[c.r]+'は'+CAP_T[c.r]+'枚までしか組めません');
+ deck.push(id);persist();dbmsg('');renderDB()}
+function dbRemove(id){
+ const deck=PD.decks[DB.slot],idx=deck.lastIndexOf(id);if(idx<0)return;
+ deck.splice(idx,1);persist();dbmsg('');renderDB()}
+$('db').onclick=e=>{const t=e.target.closest('[data-slot],[data-tier],[data-p],[data-m],#dbback');if(!t)return;
+ if(t.dataset.slot!==undefined){DB.slot=+t.dataset.slot;renderDB()}
+ else if(t.dataset.tier!==undefined){DB.tier=+t.dataset.tier;renderDB()}
+ else if(t.dataset.p)dbAdd(t.dataset.p);
+ else if(t.dataset.m)dbRemove(t.dataset.m);
+ else if(t.id==='dbback'){PD.active=DB.slot;persist();$('db').hidden=true;showMenu()}};
+$('m_deck').onclick=()=>{DB={slot:PD.active,tier:0};dbmsg('');$('mm').hidden=true;$('db').hidden=false;renderDB()};
+$('m_solo').onclick=()=>{leaveOnline();S={mode:'solo',stage:PD.stage,deck:[...PD.deck]};$('mm').hidden=true;$('gm').hidden=false;newStage()};
+function needDeck(){
+ if(activeDeckOK())return true;
+ DB={slot:PD.active,tier:0};$('mm').hidden=true;$('db').hidden=false;renderDB();
+ dbmsg(`まず${DECK_MIN}枚以上のデッキを作ってください`);return false}
+$('m_prac').onclick=()=>{if(!needDeck())return;leaveOnline();S={mode:'practice',deck:[...PD.decks[PD.active]]};$('mm').hidden=true;$('gm').hidden=false;$('rm').hidden=true;newPractice()};
+$('m_onl').onclick=()=>{if(!needDeck())return;leaveOnline();S={mode:'online',deck:[...PD.decks[PD.active]]};$('mm').hidden=true;$('gm').hidden=false;$('rm').hidden=false;$('rc').value='';rs('')};
+$('mmlo').onclick=()=>{leaveOnline();$('mm').hidden=true;$('lg').hidden=false;$('pn').focus()};
+// ================= ログイン =================
 function enter(){
  const n=$('pn').value.normalize('NFKC').trim();
  if(!n){$('lm').textContent='名前を入力してください';return}
  NAME=n;try{localStorage.setItem('crv:last',n)}catch(e){}
- const d=load(n),dk=d&&Array.isArray(d.deck)?d.deck.filter(k=>CARDS[k]):[],old=dk.length>=5;
- S=old?{stage:Math.max(1,d.stage|0),deck:dk,best:d.best|0}:{stage:1,deck:[...START],best:0};
- $('lg').hidden=true;$('gm').hidden=false;newStage();
- msg(old?`おかえり、${n}。第${S.stage}戦から再開`:`はじめまして、${n}`);
- if(AUTO){$('rc').value=AUTO;AUTO=null;$('rm').hidden=false;joinRoom()}}
+ PD=loadPD(n);
+ $('lg').hidden=true;showMenu();
+ if(AUTO){const code=AUTO;AUTO=null;if(needDeck()){S={mode:'online',deck:[...PD.decks[PD.active]]};$('mm').hidden=true;$('gm').hidden=false;$('rm').hidden=false;$('rc').value=code;joinRoom()}}}
 $('go').onclick=enter;$('pn').onkeydown=e=>{if(e.key==='Enter')enter()};
-$('lo').onclick=()=>{leaveOnline();$('gm').hidden=true;$('lg').hidden=false;$('pn').focus()};
 try{$('pn').value=localStorage.getItem('crv:last')||''}catch(e){}
 </script>
 </body>
